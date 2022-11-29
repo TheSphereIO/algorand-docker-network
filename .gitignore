@@ -15,9 +15,12 @@ lib
 */**/*.DotSettings
 # Generated files
 .idea/**/contentModel.xml
-*nodes-set/**/*
+*nodes-net/**/*
+network_templates
 .idea
 **/*/.idea
+
+kml*
 
 # Sensitive or high-churn files
 .idea/**/dataSources/

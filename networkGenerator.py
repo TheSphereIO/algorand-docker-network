@@ -9,7 +9,10 @@ template = {}
 # Information for the genesis
 template['Genesis'] = {}
 # Information for the network
-template['Genesis']["NetworkName"] = str(networkSize) + "nodes-net"
+netName = str(networkSize) + "nodes-net"
+boostrpId = rf"{netName}.algorand-testnet.network"
+template['Genesis']["NetworkName"] = netName
+template['Genesis']["DNSBootstrapID"] =  boostrpId
 template['Nodes'] = []
 template['Genesis']["Wallets"] = []
 
@@ -25,6 +28,7 @@ for i in range(0,networkSize):
     walletName="Wallet"+str(i+1)
     template['Nodes'].append({
         "Name": "Node-" + str(i+1),
+
             "Wallets": [
                 {
                     "Name": "Wallet"+ str(i+1),
@@ -56,4 +60,4 @@ template['Nodes'].append({
 
 file = os.path.join('network_templates', str(networkSize) + '-nodes.json')
 stream = open(file, 'w')
-json.dump(template, stream)
+json.dump(template, stream, indent=2)

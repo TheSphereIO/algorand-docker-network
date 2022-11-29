@@ -36,15 +36,15 @@ echo ""
 sleep 2
 
 echo " 🧹 Cleaning any pre-configuration..."
-sh configureNetwork.sh clean $destination $sizeNetwork   
+bash configureNetwork.sh clean $destination $sizeNetwork
 echo " Done! ✅ "
 echo ""
 echo "################################"
 echo ""
 
 sleep 2
-
-sh configureNetwork.sh "docker" $destination $sizeNetwork   
+#
+bash configureNetwork.sh "docker" $destination $sizeNetwork
 
 echo $sizeNetwork >> $destination/sizeNetwork
 

@@ -12,20 +12,18 @@ apiToken="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 
 # Algod relay
 algodRelayDocker='{
-    "Version": 14, 
+    "Version": 24, 
     "GossipFanout": 2, 
     "NetAddress": ":4444",
     "EndpointAddress": "0.0.0.0:4001",
-    "DNSBootstrapID": "",
     "EnableProfiler": true
 }'
 
 # Algod participant
 algodPartDocker='{
-	"Version": 14,
+	"Version": 24,
 	"GossipFanout": 2,
 	"IncomingConnectionsLimit": 0,
-	"DNSBootstrapID": "",
 	"EndpointAddress": "0.0.0.0:4001",
 	"EnableProfiler": true
 }'
@@ -62,9 +60,9 @@ function configurePartDocker {
         touch algod.token
         echo $apiToken >> algod.token  
 
-        touch config.json
-        echo $algodPartDocker >> config.json
-        echo ">>✅ Created algod config for ${bold}${nodeFolder}${normal} in: ${PWD}..."
+#        touch config.json
+#        echo $algodPartDocker >> config.json
+#        echo ">>✅ Created algod config for ${bold}${nodeFolder}${normal} in: ${PWD}..."
 
         # check if folder exists
         if [ ! -d "kmd-v0.5" ]; then
@@ -77,12 +75,12 @@ function configurePartDocker {
         touch kmd.token
         echo $apiToken >> kmd.token
 
-        touch kmd_config.json
-        echo $kmdDocker >> kmd_config.json
-        echo ">>✅ Created kmd config for ${bold}${nodeFolder}${normal} in: ${PWD}..."
+#        touch kmd_config.json
+#        echo $kmdDocker >> kmd_config.json
+#        echo ">>✅ Created kmd config for ${bold}${nodeFolder}${normal} in: ${PWD}..."
 
         cd ..
-
+        cp ../../phonebook.json phonebook.json
         cp ../../docker_config/part/start.sh start.sh
 
         cd ..
@@ -99,9 +97,9 @@ function configureRelayDocker {
     touch algod.token
     echo $apiToken >> algod.token
 
-    touch config.json
-    echo $algodRelayDocker >> config.json
-    echo ">>✅ Created algod config for ${bold}Relay-Node${normal} in: ${PWD}..."
+#    touch config.json
+#    echo $algodRelayDocker >> config.json
+#    echo ">>✅ Created algod config for ${bold}Relay-Node${normal} in: ${PWD}..."
 
 
     if [ ! -d "kmd-v0.5" ]; then
@@ -114,12 +112,12 @@ function configureRelayDocker {
     touch kmd.token
     echo $apiToken >> kmd.token
 
-    touch kmd_config.json
-    echo $kmdDocker >> kmd_config.json
-    echo ">>✅ Created kmd config for ${bold}Relay-Node${normal} in: ${PWD}..."
+#    touch kmd_config.json
+#    echo $kmdDocker >> kmd_config.json
+#    echo ">>✅ Created kmd config for ${bold}Relay-Node${normal} in: ${PWD}..."
 
     cd ..
-
+    cp ../../phonebook.json phonebook.json
     cp ../../docker_config/relay/start.sh start.sh
     
 }
@@ -147,44 +145,44 @@ function clean {
         # check if node exists
         if [[ -d $nodeFolder ]]; then
             cd $nodeFolder
-            echo ">>🗑 Removing algod config for ${bold}${nodeFolder}${normal} in: ${PWD}..."
-            rm -rf config.json
-            echo ">>🗑 Removing algod.token for ${bold}${nodeFolder}${normal} in:  ${PWD}..."        
+#            echo ">>🗑 Removing algod config for ${bold}${nodeFolder}${normal} in: ${PWD}..."
+#            rm -rf config.json
+            echo ">>🗑 Removing algod.token for ${bold}${nodeFolder}${normal} in:  ${PWD}..."
             rm -rf algod.token
 
             if [ -d "kmd-v0.5" ]; then
                 cd 'kmd-v0.5'
-                echo ">>🗑 Removing kmd.token for ${bold}${nodeFolder}${normal} in:  ${PWD}..."        
+                echo ">>🗑 Removing kmd.token for ${bold}${nodeFolder}${normal} in:  ${PWD}..."
                 rm -rf kmd.token
 
-                
-                if [[ -f "kmd_config.json" ]]; then
-                    echo ">>🗑 Removing kmd config for ${bold}${nodeFolder}${normal} in:  ${PWD}..."        
-                    rm -rf kmd_config.json
-                fi
+
+#                if [[ -f "kmd_config.json" ]]; then
+#                    echo ">>🗑 Removing kmd config for ${bold}${nodeFolder}${normal} in:  ${PWD}..."
+#                    rm -rf kmd_config.json
+#                fi
                 cd ..
             fi
-            
+
             cd ..
         fi
         echo ""
     done
-    
+
     if [[ -d "Relay-Node" ]]; then
         cd 'Relay-Node'
-        echo ">>🗑 Removing algod config for ${bold}Relay-Node${normal} in: ${PWD}..."
-        rm -rf config.json
+#        echo ">>🗑 Removing algod config for ${bold}Relay-Node${normal} in: ${PWD}..."
+#        rm -rf config.json
         rm -rf algod.token
 
         if [ -d "kmd-v0.5" ]; then
             cd 'kmd-v0.5'
-            echo ">>🗑 Removing kmd.token for ${bold}${nodeFolder}${normal} in:  ${PWD}..."        
+            echo ">>🗑 Removing kmd.token for ${bold}${nodeFolder}${normal} in:  ${PWD}..."
             rm -rf kmd.token
-            if [[ -f "kmd_config.json" ]]; then
-                echo ">>🗑 Removing kmd config for ${bold}Relay-Node${normal} in: ${PWD}..."        
-                rm -rf kmd_config.json
-            fi
-            
+#            if [[ -f "kmd_config.json" ]]; then
+#                echo ">>🗑 Removing kmd config for ${bold}Relay-Node${normal} in: ${PWD}..."
+#                rm -rf kmd_config.json
+#            fi
+
             cd ..
         fi
     fi

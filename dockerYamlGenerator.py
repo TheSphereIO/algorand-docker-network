@@ -11,7 +11,8 @@ kmdPort=4002
 yaml_file={}
 yaml_file['version']="3"
 
-
+version='3.11.3'
+chain='stable'
 nodes = {}
 
 ################# Relay node #################
@@ -23,13 +24,13 @@ relayNode={}
 # relayNode['environment']=environment
 
 
-relayNode['image']='algorand/stable:2.4.1'
+relayNode['image']=fr'algorand/{chain}:{version}'
 
 # keep container running
-relayNode['tty']='true'
+relayNode['tty']= True
 
 # image name
-relayNode['image']='algorand/stable:2.4.1'
+relayNode['image']=fr'algorand/{chain}:{version}'
 
 # command to execute when container has started
 relayNode['command']='bash -c "/root/node/goal node start -d /root/data && /root/node/carpenter -file /root/data/node.log"'
@@ -64,10 +65,10 @@ for i in range(0,networkSize):
     node['hostname']='Node-'+str(i+1)
 
     # keep running container after execution
-    node['tty']='true'
+    node['tty']= True
 
     # image name
-    node['image']='algorand/stable:2.4.1'
+    node['image']=fr'algorand/{chain}:{version}'
 
     # command to execute when container has started
     node['command']='bash -c "/root/node/goal node start -p "Relay-Node:4444" -d /root/data && /root/node/carpenter -file /root/data/node.log"'
