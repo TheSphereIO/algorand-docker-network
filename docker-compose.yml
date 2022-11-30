@@ -1,0 +1,34 @@
+version: '3.9'
+
+services:
+  algod:
+    container_name: "${ALGOD_CONTAINER:-algorand-sandbox-algod}"
+    build:
+      context: .
+      dockerfile: ./images/algod/Dockerfile
+      args:
+        BOOTSTRAP_URL: "${NETWORK_BOOTSTRAP_URL}"
+        GENESIS_FILE: "${NETWORK_GENESIS_FILE}"
+        TEMPLATE: "${NETWORK_TEMPLATE:-images/algod/template.json}"
+        NETWORK_NUM_ROUNDS: "${NETWORK_NUM_ROUNDS:-30000}"
+        NODE_ARCHIVAL: "${NODE_ARCHIVAL}"
+        TOKEN: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        ALGOD_PORT: "4001"
+        KMD_PORT: "4002"
+        CDT_PORT: "9392"
+    environment:
+        BOOTSTRAP_URL: "${NETWORK_BOOTSTRAP_URL}"
+        GENESIS_FILE: "${NETWORK_GENESIS_FILE}"
+        TEMPLATE: "${NETWORK_TEMPLATE:-images/algod/template.json}"
+        NETWORK_NUM_ROUNDS: "${NETWORK_NUM_ROUNDS:-30000}"
+        NET_ROOT: "${NET_ROOT}"
+        ALGORAND_DATA: "${/root/testnetwork/Node}"
+    ports:
+      - ${ALGOD_PORT:-4001}:4001
+      - ${KMD_PORT:-4002}:4002
+      - ${CDT_PORT:-9392}:9392
+    volumes:
+      - ${NET_ROOT}:/root/testnetwork
+volumes:
+  network:
+
